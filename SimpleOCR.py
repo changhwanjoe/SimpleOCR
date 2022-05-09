@@ -29,7 +29,7 @@ class SimpleOCR:
             img = cv2.imread(self.path + '/' + file_name )                  
             roi = img[y:y+h, x:x+w]             # set roi   ---①
             print(f"roi.shape = {roi.shape}")   # roi shape (50,50,3)
-            cv2.imshow("roi", roi)
+            #cv2.imshow("roi", roi)
 
             #cv2.rectangle(roi, (0,0), (h-1, w-1), (0,255,0)) # roi 전체에 사각형 그리기 ---②
             
@@ -39,7 +39,7 @@ class SimpleOCR:
             result = pytesseract.image_to_string(Image.open(roi_name), lang='eng')
             
             li=result.split()
-            
+            print(f"li: {li}") 
             for ind,st in enumerate(result.split()):
                 if st == "KSID":
                     print("ksid,",  li[ind+2])
