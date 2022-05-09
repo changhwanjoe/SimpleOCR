@@ -4,28 +4,30 @@ import sys
 import cv2
 import numpy as np
 import pytesseract
-
 from  PIL import Image
+
+X, Y = 50, 1550 # set roi vertex coordinates
+W, H = 500, 400 # set roi bounding box 
+PATH = './imgfiles' # set folder name
 
 class SimpleOCR:
     def __init__(self):
-        self.x = self.y = self.w = self.h = 0
-        self.path = './imgfiles'
+        self.x, self.y = X, Y
+        self.w, self.h = W, H
+        self.path = PATH        
         if not os.path.isdir(self.path):        # if folder not exists
             os.mkdir(self.path)
         
         self.file_list = os.listdir(self.path)  # files in folder
-        if len(self.file_list) ==0 :
+        if len(self.file_list) == 0 :
             print("Folder is empty.")
             sys.exit()
         
         
     def run(self):
         for index, file_name in enumerate(self.file_list):
-            file_dir= self.path + '/' + file_name 
-            img = cv2.imread(file_dir)
-                    
-            x=50; y=1550; w=500; h=400          # roi coord 
+            x, y, w, h = self.x, self.y, self.w, self.h
+            img = cv2.imread(self.path + '/' + file_name )                  
             roi = img[y:y+h, x:x+w]             # set roi   ---①
             print(f"roi.shape = {roi.shape}")   # roi shape (50,50,3)
             cv2.imshow("roi", roi)
